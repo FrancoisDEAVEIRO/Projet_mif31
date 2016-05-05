@@ -37,6 +37,7 @@ int main(int , char** )
     nuageDePoints = lecture<int,2>("data/pointRandom2D.txt");
 
 	Pavage<int,2> pavage(nuageDePoints,DIMW);
+	pavage.affiche();
     pavage.displayInfo("info","info","info", DIMW, infoSize);
 
 	while( !stop ){
