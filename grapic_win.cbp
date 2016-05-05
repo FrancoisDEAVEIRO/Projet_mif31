@@ -144,10 +144,37 @@
 		<Unit filename="apps/tetris/main_tetris.cpp">
 			<Option target="tetris" />
 		</Unit>
+		<Unit filename="include/createFile.hpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="include/formule.hpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="include/pavage.hpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="include/point.hpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="include/reader.hpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="include/simplexe.hpp">
+			<Option target="myprog" />
+		</Unit>
 		<Unit filename="src/Grapic.cpp" />
 		<Unit filename="src/Grapic.h" />
 		<Unit filename="src/Grapic_func.cpp" />
 		<Unit filename="src/Grapic_func.h" />
+		<Unit filename="tools/createFile.cpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="tools/formule.cpp">
+			<Option target="myprog" />
+		</Unit>
+		<Unit filename="tools/reader.cpp">
+			<Option target="myprog" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

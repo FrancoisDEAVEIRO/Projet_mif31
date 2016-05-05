@@ -4,6 +4,16 @@
 #include <iostream>
 #include <vector>
 #include "point.hpp"
+#include <Grapic.h>
+
+using namespace grapic;
+
+struct Color
+{
+    int r;
+    int g;
+    int b;
+};
 
 template <typename T, int N> class Simplexe;
 
@@ -17,6 +27,7 @@ template <typename T, int N> class Simplexe{
 	public :
 		Simplexe();
  		std::vector<Point<T,N> > tab;
+ 		bool hover;
  		Simplexe<T, N>(const int);
         Simplexe<T, N>(const Simplexe &);
         virtual ~Simplexe();
@@ -29,13 +40,14 @@ template <typename T, int N> class Simplexe{
         bool appartient(const Point<T,N>&);
         int detPos(Simplexe &,const Point<T,N>&);
         std::string toString();
+        void drawSimplexe(Color c);
 };
 
 /* Implémentation des fonctions */
 
 template<typename T, int N>
 Simplexe<T,N>::Simplexe(){
-
+    hover = false;
 }
 
 template<typename T, int N>
@@ -45,11 +57,13 @@ Simplexe<T, N>::~Simplexe(){
 
 template<typename T, int N>
 Simplexe<T, N>::Simplexe(const Simplexe & s):tab(s.tab){
+    hover = false;
 }
 
 template<typename T, int N>
 Simplexe<T, N>& Simplexe<T, N>::operator=(const Simplexe & s){
     tab = s.tab;
+    hover = false;
     return *this;
 }
 
@@ -130,6 +144,18 @@ int Simplexe<T,N>::detPos( Simplexe<T,N>& sm1,const Point<T,N>& p){
     int y1 = sm1[0].tab[1]-p[1];
     int y2 = sm1[1].tab[1]-p[1];
     return (x1*y2-y1*x2);
+}
+
+// AFFICHAGE
+template<typename T, int N>
+void Simplexe<T,N>::drawSimplexe(Color c){
+    color(c.r, c.g, c.b);
+    for(unsigned int k=0; k<tab.size(); k++){
+        if(k != tab.size()-1)
+            line(tab[k].tab[0], tab[k].tab[1], tab[k+1].tab[0], tab[k+1].tab[1]);
+        else
+            line(tab[k].tab[0], tab[k].tab[1], tab[0].tab[0], tab[0].tab[1]);
+    }
 }
 
 #endif // SIMPLEXE_HPP

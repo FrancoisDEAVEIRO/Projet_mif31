@@ -8,6 +8,7 @@
 #include "simplexe.hpp"
 #include "formule.hpp"
 #include <Grapic.h>
+
 using namespace grapic;
 
 template <typename T, int N> class Pavage;
@@ -21,7 +22,8 @@ template <typename T, int N> class Pavage{
         void ajout(const Simplexe<int,N>);
         void affiche();
         void addPoint(Point<int,N>&);
-
+        void drawPavage(int dimW, int infoSize);
+        void displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize);
 };
 
 template<typename T, int N>
@@ -86,12 +88,11 @@ void Pavage<T, N>::addPoint(Point<int,N>& p){
                 }
 
                 // On retrace les sous simplexes
-                for(unsigned int k=0; k<s.tab.size(); k++){
-                    if(k!=s.tab.size()-1)
-                        line(s.tab[k].tab[0],s.tab[k].tab[1], s.tab[k+1].tab[0],s.tab[k+1].tab[1]);
-                    else
-                        line(s.tab[k].tab[0],s.tab[k].tab[1], s.tab[0].tab[0],s.tab[0].tab[1]);
-                }
+                Color c;
+                c.r = 255;
+                c.g = 255;
+                c.b = 255;
+                s.drawSimplexe(c);
                 tmp2.push_back(s);
             }
             tab.erase(i);
@@ -113,6 +114,106 @@ void Pavage<T, N>::affiche(){
         std::cout << *i << std::endl ;
     }
 }
+
+//AFFICHAGE
+template <typename T, int N>
+void Pavage<T, N>::drawPavage(int dimW, int infoSize){
+    if (isMousePressed(SDL_BUTTON_LEFT)){
+		int x, y;
+		mousePos(x, y);
+        Point<int,2> p({x,y});
+        for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
+            if((*i).appartient(p)){
+                Point<int,2> barycentre = (*i).barycentre();
+                Color c;
+                c.r = 0;
+                c.g = 255;
+                c.b = 0;
+                (*i).drawSimplexe(c);
+                (*i).hover = true;
+                std::string info1 = "Coordonnées : X = "+ std::to_string(x) + ", Y = " + std::to_string(y);
+                std::string info2 = "Simplexe : " + (*i).toString();
+                std::string info3 = "Barycentre : " + barycentre.toString();
+                displayInfo(info1, info2, info3, dimW,infoSize);
+            }else{
+                if((*i).hover){
+                    Color c;
+                    c.r = 255;
+                    c.g = 255;
+                    c.b = 255;
+                    (*i).drawSimplexe(c);
+                    (*i).hover = false;
+                }
+            }
+        }
+
+	}else if (isMousePressed(SDL_BUTTON_RIGHT)){
+		int x, y;
+		mousePos(x, y);
+        Point<int,2> p({x,y});
+        for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
+            if((*i).appartient(p)){
+                 Color c;
+                 c.r = 255;
+                 c.g = 0;
+                 c.b = 0;
+                 (*i).drawSimplexe(c);
+                 (*i).hover = true;
+            }else{
+                if((*i).hover){
+                    Color c;
+                    c.r = 255;
+                    c.g = 255;
+                    c.b = 255;
+                    (*i).drawSimplexe(c);
+                    (*i).hover = false;
+                }
+            }
+        }
+	}else{// MOUSE HOVER
+        int x, y;
+		mousePos(x, y);
+        Point<int,2> p({x,y});
+        for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
+            if((*i).appartient(p)){
+                if(!(*i).hover){
+                    Point<int,2> barycentre = (*i).barycentre();
+                    Color c;
+                    c.r = 0;
+                    c.g = 0;
+                    c.b = 255;
+                    (*i).drawSimplexe(c);
+                    (*i).hover = true;
+                    std::string info1 = "Coordonnées : X = "+ std::to_string(x) + ", Y = " + std::to_string(y);
+                    std::string info2 = "Simplexe : " + (*i).toString();
+                    std::string info3 = "Barycentre : " + barycentre.toString();
+                    displayInfo(info1, info2, info3, dimW,infoSize);
+                }
+            }else{
+                if((*i).hover){
+                    Color c;
+                    c.r = 255;
+                    c.g = 255;
+                    c.b = 255;
+                    (*i).drawSimplexe(c);
+                    (*i).hover = false;
+                }
+            }
+        }
+	}
+}
+
+
+template <typename T, int N>
+void Pavage<T, N>::displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize){
+    color(230,230,230);
+    rectangleFill(0,dimW,dimW,dimW+infoSize);
+    color(0,0,0);
+    print(5,dimW+infoSize*3/4, texte1.c_str());
+    print(5,dimW+infoSize/2, texte2.c_str());
+    print(5,dimW+infoSize/4, texte3.c_str());
+}
+
 
 
 
