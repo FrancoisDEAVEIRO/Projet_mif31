@@ -19,7 +19,7 @@ template <typename T, int N> class Point{
 		std::vector<T> tab;
 		Point<T, N>(const int);
         Point<T, N>(const Point &);
-        Point<T, N>(const std::vector<int>);
+        Point<T, N>(const std::vector<T>);
         virtual ~Point();
         Point<T, N>& operator=(const Point &);
         bool operator==(const Point<T, N> &) const;
@@ -32,7 +32,7 @@ template <typename T, int N> class Point{
 };
 
 template<typename T, int N>
-Point<T,N>::Point(const std::vector<int> t){
+Point<T,N>::Point(const std::vector<T> t){
     tab = t;
     id = 0;
 }
@@ -67,14 +67,14 @@ Point<T, N>::~Point(){
 template<typename T, int N>
 void Point<T,N>::affiche(){
     std::cout << id << " : ";
-    for(std::vector<int>::iterator i = tab.begin(); i != tab.end();i++)
+    for(typename std::vector<T>::iterator i = tab.begin(); i != tab.end();i++)
         std::cout << *i << " ";
 }
 
 template<typename T, int N>
 std::string Point<T,N>::toString(){
     std::string res = "";
-    for(std::vector<int>::iterator i = tab.begin(); i != tab.end();i++)
+    for(typename std::vector<T>::iterator i = tab.begin(); i != tab.end();i++)
         res+= std::to_string(*i) + " ";
     return res;
 }
@@ -82,7 +82,7 @@ std::string Point<T,N>::toString(){
 template <class T,int N>
 std::ostream  & operator<< (std::ostream & os, Point<T,N> & p){
     os << p.id << " : ";
-    for(std::vector<int>::iterator i = p.tab.begin(); i != p.tab.end();i++)
+    for(typename std::vector<T>::iterator i = p.tab.begin(); i != p.tab.end();i++)
         os << *i << " ";
     return os ;
 }

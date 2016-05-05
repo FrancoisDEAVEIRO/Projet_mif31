@@ -19,10 +19,10 @@ template <typename T, int N> class Pavage{
         virtual ~Pavage();
  		std::vector<Simplexe<T,N> > tab;
         Pavage<T, N>(std::vector<Point<T,N> >, int winSize);
-        void ajout(const Simplexe<int,N>);
+        void ajout(const Simplexe<T,N>);
         void affiche();
-        void addPoint(Point<int,N>&);
-        void addPointSimplexe(Point<int,N>& p, Simplexe<T,N>& s,const typename std::vector<Simplexe<T,N> >::iterator it);
+        void addPoint(Point<T,N>&);
+        void addPointSimplexe(Point<T,N>& p, Simplexe<T,N>& s,const typename std::vector<Simplexe<T,N> >::iterator it);
         void drawPavage(int dimW, int infoSize);
         void displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize);
 };
@@ -41,10 +41,10 @@ template <typename T, int N>
 Pavage<T, N>::Pavage(std::vector<Point<T,N> > nuageDePoints, int winSize){
     //Création du pavage
     // On englobe l'ensemble par 2 simplexes
-    Point<T,N> p1 = std::vector<int>{0,0};
-    Point<T,N> p2 = std::vector<int>{0,winSize};
-    Point<T,N> p3 = std::vector<int>{winSize,0};
-    Point<T,N> p4 = std::vector<int>{winSize,winSize};
+    Point<T,N> p1 = std::vector<T>{0,0};
+    Point<T,N> p2 = std::vector<T>{0,(T)winSize};
+    Point<T,N> p3 = std::vector<T>{(T)winSize,0};
+    Point<T,N> p4 = std::vector<T>{(T)winSize,(T)winSize};
     p1.id = -1;
     p2.id = -2;
     p3.id = -3;
@@ -69,7 +69,7 @@ Pavage<T, N>::Pavage(std::vector<Point<T,N> > nuageDePoints, int winSize){
 }
 
 template <typename T, int N>
-void Pavage<T, N>::addPoint(Point<int,N>& p){
+void Pavage<T, N>::addPoint(Point<T,N>& p){
     for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
         Simplexe<T,N> tmp = (*i);
         std::vector<Simplexe<T,N> > tmp2;
@@ -102,7 +102,7 @@ void Pavage<T, N>::addPoint(Point<int,N>& p){
 }
 
 /*template <typename T, int N>
-void Pavage<T, N>::addPointSimplexe(Point<int,N>& p, Simplexe<T,N>& s, const typename std::vector<Simplexe<T,N> >::iterator it){
+void Pavage<T, N>::addPointSimplexe(Point<T,N>& p, Simplexe<T,N>& s, const typename std::vector<Simplexe<T,N> >::iterator it){
     std::vector<Simplexe<T,N> > tmp;
     for(typename std::vector<Point<T,N> >::iterator i = s.tab.begin(); i != s.tab.end(); i++){
         Simplexe<T,N> simplexeTmp;
@@ -120,7 +120,7 @@ void Pavage<T, N>::addPointSimplexe(Point<int,N>& p, Simplexe<T,N>& s, const typ
 }*/
 
 template <typename T, int N>
-void Pavage<T, N>::ajout(const Simplexe<int,N> s){
+void Pavage<T, N>::ajout(const Simplexe<T,N> s){
     tab.push_back(s);
 }
 
@@ -138,10 +138,10 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
     if (isMousePressed(SDL_BUTTON_LEFT)){
 		int x, y;
 		mousePos(x, y);
-        Point<int,2> p({x,y});
-        for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
+        Point<T,N> p({x,y});
+        for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
-                Point<int,2> barycentre = (*i).barycentre();
+                Point<T,N> barycentre = (*i).barycentre();
                 Color c;
                 c.r = 0;
                 c.g = 255;
@@ -167,12 +167,12 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 	}else if (isMousePressed(SDL_BUTTON_RIGHT)){
 		int x, y;
 		mousePos(x, y);
-        Point<int,2> p({x,y});
-        for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
+        Point<T,N> p({x,y});
+        for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 addPoint(p);
                 Color c;
-                c.r = 255;
+                c.r = 0;
                 c.g = 0;
                 c.b = 0;
                 (*i).drawSimplexe(c);
@@ -193,11 +193,11 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 	}else{// MOUSE HOVER
         int x, y;
 		mousePos(x, y);
-        Point<int,2> p({x,y});
-        for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
+        Point<T,N> p({x,y});
+        for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 if(!(*i).hover){
-                    Point<int,2> barycentre = (*i).barycentre();
+                    Point<T,N> barycentre = (*i).barycentre();
                     Color c;
                     c.r = 0;
                     c.g = 0;
