@@ -22,6 +22,7 @@ template <typename T, int N> class Pavage{
         void ajout(const Simplexe<int,N>);
         void affiche();
         void addPoint(Point<int,N>&);
+        void addPointSimplexe(Point<int,N>& p, Simplexe<T,N>& s,const typename std::vector<Simplexe<T,N> >::iterator it);
         void drawPavage(int dimW, int infoSize);
         void displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize);
 };
@@ -63,7 +64,6 @@ Pavage<T, N>::Pavage(std::vector<Point<T,N> > nuageDePoints, int winSize){
         color(255, 255, 255);
         point((*i)[0],(*i)[1]);
         //print((*i)[0],(*i)[1],(*i).id);
-        //std::cout << "On ajoute le point " << *i << "au maillage " <<std::endl;
         addPoint(*i);
     }
 }
@@ -75,8 +75,7 @@ void Pavage<T, N>::addPoint(Point<int,N>& p){
         std::vector<Simplexe<T,N> > tmp2;
 
         if(tmp.appartient(p)){
-            //std::cout<<" le point : " << p << "appartient a " << tmp << std::endl;
-        // On split le simplexe en N+1 N-simplexes
+            // On split le simplexe en N+1 N-simplexes
             for(typename std::vector<Point<T,N> >::iterator j = tmp.tab.begin(); j != tmp.tab.end(); j++){
                 Simplexe<T,N> s;
                 s.ajout(p);
@@ -101,6 +100,24 @@ void Pavage<T, N>::addPoint(Point<int,N>& p){
         }
     }
 }
+
+/*template <typename T, int N>
+void Pavage<T, N>::addPointSimplexe(Point<int,N>& p, Simplexe<T,N>& s, const typename std::vector<Simplexe<T,N> >::iterator it){
+    std::vector<Simplexe<T,N> > tmp;
+    for(typename std::vector<Point<T,N> >::iterator i = s.tab.begin(); i != s.tab.end(); i++){
+        Simplexe<T,N> simplexeTmp;
+        simplexeTmp.ajout(p);
+        simplexeTmp.ajout(*i);
+        if((i+1) != s.tab.end()){
+            simplexeTmp.ajout(*(i+1));
+        }else{
+            simplexeTmp.ajout(s.tab[0]);
+        }
+        tmp.push_back(simplexeTmp);
+    }
+    tab.erase(it);
+    tab.insert(tab.end(),tmp.begin(),tmp.end());
+}*/
 
 template <typename T, int N>
 void Pavage<T, N>::ajout(const Simplexe<int,N> s){
@@ -153,12 +170,15 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
         Point<int,2> p({x,y});
         for(typename std::vector<Simplexe<int,2> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
-                 Color c;
-                 c.r = 255;
-                 c.g = 0;
-                 c.b = 0;
-                 (*i).drawSimplexe(c);
-                 (*i).hover = true;
+                addPoint(p);
+                Color c;
+                c.r = 255;
+                c.g = 0;
+                c.b = 0;
+                (*i).drawSimplexe(c);
+                (*i).hover = true;
+                //Pour éviter les erreur dues à la modification de tab
+                break;
             }else{
                 if((*i).hover){
                     Color c;

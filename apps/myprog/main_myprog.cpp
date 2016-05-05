@@ -32,7 +32,7 @@ int main(int , char** )
     bool stop=false;
 	winInit("MyProg", DIMW, DIMW+infoSize);
     setKeyRepeatMode(false);
-    CreateFilePointRandom(2, DIMW, 100);
+    CreateFilePointRandom(2, DIMW, 10);
     std::vector<Point<int,2> > nuageDePoints;
     nuageDePoints = lecture<int,2>("data/pointRandom2D.txt");
 
