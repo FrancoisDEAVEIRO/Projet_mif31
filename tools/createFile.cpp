@@ -15,6 +15,5 @@ void CreateFilePointRandom(int N, int max, int nbPoints){
         }
         objetfichier <<  std::endl;
 	}
-
     objetfichier.close(); //on ferme le fichier pour liberer la mémoire
 }
