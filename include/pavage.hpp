@@ -117,37 +117,6 @@ void Pavage<T, N>::init(int winSize){
         ajout(tmp);
         std::cout<<tmp<<std::endl;
     }
-
-
-    /*for(unsigned int i=0; i<nuageDePoints.size()-N; i++){
-        Simplexe<T,N> s;
-        // On ajoute N+1 simplexes
-        for(int j=0; j<N+1; j++){
-            // i étant le point de départ et j étant le nombre de points
-            s.ajout(nuageDePoints[i+j]);
-        }
-        boiteEnglobante.push_back(s);
-        std::cout << s << std::endl;
-    }*/
-    // On ajoute ensuite tous nos simplexes
-     /*for(typename std::vector<Simplexe<T,N> >::iterator i = boiteEnglobante.begin(); i != boiteEnglobante.end(); i++){
-        ajout(*i);
-     }*/
-
-    /*Point<T,N> p1 = std::vector<T>{0,0};
-    Point<T,N> p2 = std::vector<T>{0,(T)winSize};
-    Point<T,N> p3 = std::vector<T>{(T)winSize,0};
-    Point<T,N> p4 = std::vector<T>{(T)winSize,(T)winSize};
-    Simplexe<T,N> s1;
-    Simplexe<T,N> s2;
-    s1.ajout(p1);
-    s1.ajout(p2);
-    s1.ajout(p3);
-    s2.ajout(p2);
-    s2.ajout(p3);
-    s2.ajout(p4);
-    ajout(s1);
-    ajout(s2);*/
 }
 
 template <typename T, int N>
@@ -217,24 +186,6 @@ bool Pavage<T, N>::existeDeja(Point<T,N>& p){
     }
     return false;
 }
-
-/*template <typename T, int N>
-void Pavage<T, N>::addPointSimplexe(Point<T,N>& p, Simplexe<T,N>& s, const typename std::vector<Simplexe<T,N> >::iterator it){
-    std::vector<Simplexe<T,N> > tmp;
-    for(typename std::vector<Point<T,N> >::iterator i = s.tab.begin(); i != s.tab.end(); i++){
-        Simplexe<T,N> simplexeTmp;
-        simplexeTmp.ajout(p);
-        simplexeTmp.ajout(*i);
-        if((i+1) != s.tab.end()){
-            simplexeTmp.ajout(*(i+1));
-        }else{
-            simplexeTmp.ajout(s.tab[0]);
-        }
-        tmp.push_back(simplexeTmp);
-    }
-    tab.erase(it);
-    tab.insert(tab.end(),tmp.begin(),tmp.end());
-}*/
 
 template <typename T, int N>
 void Pavage<T, N>::ajout(const Simplexe<T,N> s){
@@ -350,8 +301,6 @@ void Pavage<T, N>::displayInfo(std::string texte1,std::string texte2,std::string
     print(5,dimW+infoSize/2, texte2.c_str());
     print(5,dimW+infoSize/4, texte3.c_str());
 }
-
-
 
 
 

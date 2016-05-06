@@ -149,6 +149,8 @@ int Simplexe<T,N>::detPos( Simplexe<T,N>& sm1,const Point<T,N>& p){
 // AFFICHAGE
 template<typename T, int N>
 void Simplexe<T,N>::drawSimplexe(Color c){
+    // L'affichage se fait a maximum 2 Dimension (ne disposant pas des compétences pour le 3D)
+    // Par conséquent toutes les autres dimension d >= 3 sont masquées
     color(c.r, c.g, c.b);
     for(unsigned int k=0; k<tab.size(); k++){
         if(k != tab.size()-1)

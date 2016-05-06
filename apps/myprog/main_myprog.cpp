@@ -15,13 +15,6 @@ struct Data
     int n;
 };
 
-/*struct Color
-{
-    int r;
-    int g;
-    int b;
-};*/
-
 void init(Data& d)
 {
     d.n = 10;
@@ -32,7 +25,7 @@ int main(int , char** )
     bool stop=false;
 	winInit("MyProg", DIMW, DIMW+infoSize);
     setKeyRepeatMode(false);
-    CreateFilePointRandom(3, DIMW, 10);
+    CreateFilePointRandom(3, DIMW, 1);
     std::vector<Point<int,3> > nuageDePoints;
     nuageDePoints = lecture<int,3>("data/pointRandom2D.txt");
 
