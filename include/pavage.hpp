@@ -7,7 +7,6 @@
 #include <math.h>
 #include "point.hpp"
 #include "simplexe.hpp"
-#include "formule.hpp"
 #include <Grapic.h>
 
 using namespace grapic;
@@ -30,6 +29,7 @@ template <typename T, int N> class Pavage{
         void addPointSimplexe(Point<T,N>& p, Simplexe<T,N>& s,const typename std::vector<Simplexe<T,N> >::iterator it);
         void drawPavage(int dimW, int infoSize);
         void displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize);
+        float distancePoint(Point<T,N> p1,Point<T,N> p2);
         bool existeDeja(Point<T,N>& p);
         bool estOppose(Point<T,N> p1, Point<T,N> p2);
         void dec2bin(int a, std::vector<int>&, int dim);
@@ -300,6 +300,15 @@ void Pavage<T, N>::displayInfo(std::string texte1,std::string texte2,std::string
     print(5,dimW+infoSize*3/4, texte1.c_str());
     print(5,dimW+infoSize/2, texte2.c_str());
     print(5,dimW+infoSize/4, texte3.c_str());
+}
+
+template<typename T, int N>
+float Pavage<T, N>::distancePoint(Point<T,N> p1,Point<T,N> p2){
+    T somme = 0;
+    for(int i=0; i<N; i++){
+        somme+=pow(p2[i]-p1[i],2);
+    }
+    return sqrt(somme);
 }
 
 
