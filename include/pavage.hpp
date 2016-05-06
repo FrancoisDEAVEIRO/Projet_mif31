@@ -91,7 +91,6 @@ void Pavage<T, N>::init(int winSize){
     }
     // Pour chaque autres points
     for(unsigned int i=1; i<nuageDePoints.size()-1; i++){
-        std::cout<<"OK"<<std::endl;
         // On init le simplexe avec les 2 points opposés
         Simplexe<T,N> tmp = s;
         tmp.ajout(nuageDePoints[i]);
@@ -115,7 +114,6 @@ void Pavage<T, N>::init(int winSize){
                 j = 2;
         }
         ajout(tmp);
-        std::cout<<tmp<<std::endl;
     }
 }
 
