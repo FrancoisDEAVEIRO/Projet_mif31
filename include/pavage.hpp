@@ -31,6 +31,7 @@ template <typename T, int N> class Pavage{
         void drawPavage(int dimW, int infoSize);
         void displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize);
         bool existeDeja(Point<T,N>& p);
+        bool estOppose(Point<T,N> p1, Point<T,N> p2);
         void dec2bin(int a, std::vector<int>&, int dim);
 };
 
@@ -62,7 +63,7 @@ void Pavage<T, N>::init(int winSize){
     // Cela revient à utiliser un binaire avec 0->0 et 1 -> winSize
     std::vector<Point<T,N> > nuageDePoints;
     // Chaque point
-    for(int i=0; i<pow(N,2); i++){
+    for(int i=0; i<pow(2,N); i++){
         Point<T,N> p;
         std::vector<int> tab;
         dec2bin(i,tab,N);
@@ -74,9 +75,51 @@ void Pavage<T, N>::init(int winSize){
         }
         nuageDePoints.push_back(p);
     }
-    std::vector<Simplexe<T,N> > boiteEnglobante;
-    // On ajoute ensuite N=1 point qui composera le N-simplexe qui englobera avec les autres N-simplexe l'espace
-    for(unsigned int i=0; i<nuageDePoints.size()-N; i++){
+    // On ajoute ensuite N+1 points qui composeront le N-simplexe qui englobera avec les autres N-simplexes l'espace
+    // Pour ce faire j'utilise le méthode suivantes : On prend 2 points diamètralement opposés P1 et P2 avec xp1 != xp2, yp1 != yp2 , ...
+    // On peut donc prendre la 1ère et la dernière valeur puisque leur équivalent binaire est 00000... et 11111...
+    // On forme ensuite le simplexe en ajoutant N-1 points n'étant pas diamètralement opposés
+    Point<T,N> p1 = nuageDePoints[0];
+    Point<T,N> p2 = nuageDePoints[nuageDePoints.size()-1];
+    Simplexe<T,N> s;
+    s.ajout(p1);
+    s.ajout(p2);
+    //Gestion du cas de N=1 où on ne rentre même pas dans la boucle
+    if(N==1){
+        ajout(s);
+        return;
+    }
+    // Pour chaque autres points
+    for(unsigned int i=1; i<nuageDePoints.size()-1; i++){
+        std::cout<<"OK"<<std::endl;
+        // On init le simplexe avec les 2 points opposés
+        Simplexe<T,N> tmp = s;
+        tmp.ajout(nuageDePoints[i]);
+        int pointsAjoutes = 0;
+        // j est le prochain point testé en fonction de i
+        unsigned int j = i+1;
+        while(pointsAjoutes < N-2){
+            if(pointsAjoutes < N-2){
+                if( i!= j){
+                    if(!estOppose(nuageDePoints[i], nuageDePoints[j])){
+                        tmp.ajout(nuageDePoints[j]);
+                        pointsAjoutes++;
+                    }
+                }
+            }else{
+                break;
+            }
+            j++;
+            // Si on est arrivé au dernier point, on revient au deuxieme
+            if(j==nuageDePoints.size())
+                j = 2;
+        }
+        ajout(tmp);
+        std::cout<<tmp<<std::endl;
+    }
+
+
+    /*for(unsigned int i=0; i<nuageDePoints.size()-N; i++){
         Simplexe<T,N> s;
         // On ajoute N+1 simplexes
         for(int j=0; j<N+1; j++){
@@ -85,11 +128,11 @@ void Pavage<T, N>::init(int winSize){
         }
         boiteEnglobante.push_back(s);
         std::cout << s << std::endl;
-    }
+    }*/
     // On ajoute ensuite tous nos simplexes
-     for(typename std::vector<Simplexe<T,N> >::iterator i = boiteEnglobante.begin(); i != boiteEnglobante.end(); i++){
+     /*for(typename std::vector<Simplexe<T,N> >::iterator i = boiteEnglobante.begin(); i != boiteEnglobante.end(); i++){
         ajout(*i);
-     }
+     }*/
 
     /*Point<T,N> p1 = std::vector<T>{0,0};
     Point<T,N> p2 = std::vector<T>{0,(T)winSize};
@@ -106,6 +149,16 @@ void Pavage<T, N>::init(int winSize){
     ajout(s1);
     ajout(s2);*/
 }
+
+template <typename T, int N>
+bool Pavage<T, N>::estOppose(Point<T,N> p1, Point<T,N> p2){
+    for(int i=0; i<N; i++){
+        if(p1[i] == p2[i])
+            return false;
+    }
+    return true;
+}
+
 
 template <typename T, int N>
 Pavage<T, N>::Pavage(std::vector<Point<T,N> > nuageDePoints, int winSize){
@@ -149,7 +202,7 @@ void Pavage<T, N>::addPoint(Point<T,N>& p){
             }
             tab.erase(i);
             tab.insert(tab.end(),tmp2.begin(),tmp2.end());
-            break;
+            return;
         }
     }
 }
