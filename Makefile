@@ -54,7 +54,7 @@ test: bin
 bin/demo: apps/demo/main_demo.cpp $(GRAPIC_OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-bin/myprog: apps/myprog/main_myprog.cpp $(GRAPIC_OBJS)
+bin/myprog: apps/myprog/main_myprog.cpp $(GRAPIC_OBJS) tools/createFile.cpp
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 bin/particles: apps/particles/main_particles.cpp $(GRAPIC_OBJS)

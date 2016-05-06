@@ -10,6 +10,6 @@ COMPILATION
 
 EXECUTION 
  LINUX
-  ./bin/my_prog
+  ./bin/myprog
 
 
