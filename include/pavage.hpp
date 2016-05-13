@@ -18,17 +18,25 @@ std::ostream & operator << (std::ostream & os, Simplexe<T,N>&);
 
 template <typename T, int N> class Pavage{
 	public :
+	    std::string info1;
+        std::string info2;
+        std::string info3;
+        std::string info4;
+ 		std::vector<Simplexe<T,N> > tab;
 	    Pavage();
 	    void init(int winSize);
         virtual ~Pavage();
- 		std::vector<Simplexe<T,N> > tab;
         Pavage<T, N>(std::vector<Point<T,N> >, int winSize);
         void ajout(const Simplexe<T,N>);
         void affiche();
         void addPoint(Point<T,N>&);
         void addPointSimplexe(Point<T,N>& p, Simplexe<T,N>& s,const typename std::vector<Simplexe<T,N> >::iterator it);
         void drawPavage(int dimW, int infoSize);
-        void displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize);
+        void displayInfo(std::string texte1, std::string texte2, std::string texte3, int dimW, int infoSize);
+        void displayInfo1(std::string texte, int dimW, int infoSize);
+        void displayInfo2(std::string texte, int dimW, int infoSize);
+        void displayInfo3(std::string texte, int dimW, int infoSize);
+        void displayInfo4(std::string texte, int dimW, int infoSize);
         float distancePoint(Point<T,N> p1,Point<T,N> p2);
         bool existeDeja(Point<T,N>& p);
         bool estOppose(Point<T,N> p1, Point<T,N> p2);
@@ -37,7 +45,10 @@ template <typename T, int N> class Pavage{
 
 template<typename T, int N>
 Pavage<T,N>::Pavage(){
-
+    info1 = "";
+    info2 = "";
+    info3 = "";
+    info4 = "";
 }
 
 template<typename T, int N>
@@ -289,15 +300,65 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 	}
 }
 
-
 template <typename T, int N>
-void Pavage<T, N>::displayInfo(std::string texte1,std::string texte2,std::string texte3, int dimW, int infoSize){
+void Pavage<T, N>::displayInfo(std::string texte1, std::string texte2, std::string texte3, int dimW, int infoSize){
+    info1 = texte1;
+    info2 = texte2;
+    info3 = texte3;
     color(230,230,230);
     rectangleFill(0,dimW,dimW,dimW+infoSize);
     color(0,0,0);
     print(5,dimW+infoSize*3/4, texte1.c_str());
     print(5,dimW+infoSize/2, texte2.c_str());
     print(5,dimW+infoSize/4, texte3.c_str());
+}
+
+template <typename T, int N>
+void Pavage<T, N>::displayInfo1(std::string texte, int dimW, int infoSize){
+    info1 = texte;
+    color(230,230,230);
+    rectangleFill(0,dimW,dimW,dimW+infoSize);
+    color(0,0,0);
+    print(5,dimW+infoSize*3/4, texte.c_str());
+    print(5,dimW+infoSize/2, info2.c_str());
+    print(5,dimW+infoSize/4, info3.c_str());
+    print(5,dimW, info4.c_str());
+}
+
+template <typename T, int N>
+void Pavage<T, N>::displayInfo2(std::string texte, int dimW, int infoSize){
+    info2 = texte;
+    color(230,230,230);
+    rectangleFill(0,dimW,dimW,dimW+infoSize);
+    color(0,0,0);
+    print(5,dimW+infoSize*3/4, info1.c_str());
+    print(5,dimW+infoSize/2, texte.c_str());
+    print(5,dimW+infoSize/4,info3.c_str());
+    print(5,dimW, info4.c_str());
+}
+
+template <typename T, int N>
+void Pavage<T, N>::displayInfo3(std::string texte, int dimW, int infoSize){
+    info3 = texte;
+    color(230,230,230);
+    rectangleFill(0,dimW,dimW,dimW+infoSize);
+    color(0,0,0);
+    print(5,dimW+infoSize*3/4,info1.c_str());
+    print(5,dimW+infoSize/2, info2.c_str());
+    print(5,dimW+infoSize/4, texte.c_str());
+    print(5,dimW, info4.c_str());
+}
+
+template <typename T, int N>
+void Pavage<T, N>::displayInfo4(std::string texte, int dimW, int infoSize){
+    info4 = texte;
+    color(230,230,230);
+    rectangleFill(0,dimW,dimW,dimW+infoSize);
+    color(0,0,0);
+    print(5,dimW+infoSize*3/4, info1.c_str());
+    print(5,dimW+infoSize/2, info2.c_str());
+    print(5,dimW+infoSize/4, info3.c_str());
+    print(5,dimW, texte.c_str());
 }
 
 template<typename T, int N>
