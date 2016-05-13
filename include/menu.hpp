@@ -2,8 +2,10 @@
 #define MENU_HPP
 
 #include <iostream>
+#include <vector>
 #include <windows.h>
 #include <Grapic.h>
+#include "pavage.hpp"
 
 using namespace grapic;
 
@@ -15,7 +17,7 @@ template <typename T, int N> class Menu{
         bool keyPressed;
         std::string info;
 
-        void checkKey();
+        void checkKey(Pavage<T,N>&);
         Menu();
 };
 
@@ -27,7 +29,7 @@ Menu<T,N>::Menu(){
 }
 
 template<typename T, int N>
-void Menu<T,N>::checkKey(){
+void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
     //backspace
     if(GetAsyncKeyState(VK_BACK) && !keyPressed ){
         keyPressed = true;
@@ -45,9 +47,29 @@ void Menu<T,N>::checkKey(){
         keyPressed = true;
         if(info.size()>0){
             if(info == "help"){
-                info = "addpoint n1 n2 n3 ... (précisez N paramètres en fonction de la dimension)";
+                info = "USAGE : addpoint n1 n2 n3 ... (précisez N paramètres en fonction de la dimension)";
+            }else if(info.substr(0,9)=="addpoint "){
+                Point<T,N> point;
+                std::string listeCoord = info.substr(9,info.size());
+                info = listeCoord;
+                std::string delimiter = " ";
+                size_t pos = 0;
+                std::string token;
+                // On ajoute les coordonnées une par une
+                while ((pos = listeCoord.find(delimiter)) != std::string::npos) {
+                    token = listeCoord.substr(0, pos);
+                    point.ajout(std::stoi(token));
+                    listeCoord.erase(0, pos + delimiter.length());
+                }
+                // Cas du dernier élément qui n'a pas d'espace après lui
+                if(listeCoord.size()>0){
+                    point.ajout(std::stoi(listeCoord));
+                }
+                point.affiche();
+                pavage.addPoint(point);
+                info = "";
             }else{
-                info="";
+                info = "";
             }
         }
 
@@ -57,6 +79,17 @@ void Menu<T,N>::checkKey(){
         keyPressed = false;
         lastKeyPressed = 0;
     }
+
+    //SPACE
+    if(GetAsyncKeyState(VK_SPACE) && !keyPressed ){
+        keyPressed = true;
+        info+= " ";
+        lastKeyPressed = VK_SPACE;
+    }
+    if(!GetAsyncKeyState(VK_SPACE) && lastKeyPressed == VK_SPACE){
+        keyPressed = false;
+    }
+
 
     // ALPHABET A -> Z
     if(GetAsyncKeyState('A') && !keyPressed ){
