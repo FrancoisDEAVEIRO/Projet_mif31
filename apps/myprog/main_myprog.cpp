@@ -26,7 +26,7 @@ int main(int , char** )
     bool stop=false;
 	winInit("MyProg", DIMW, DIMW+infoSize);
     setKeyRepeatMode(false);
-    CreateFilePointRandom(2, DIMW, 10);
+    CreateFilePointRandom(2, DIMW, 100, 10);
     std::vector<Point<int,2> > nuageDePoints;
     nuageDePoints = lecture<int,2>("data/pointRandom2D.txt");
 
@@ -38,7 +38,7 @@ int main(int , char** )
         backgroundColor( 100, 50, 200 );
         pavage.drawPavage(DIMW,infoSize);
         stop = winDisplay();
-        menu.checkKey(pavage);
+        menu.checkKey(pavage, DIMW);
         pavage.displayInfo4(":>"+menu.info+"_", DIMW, infoSize);
     }
     //winQuit();

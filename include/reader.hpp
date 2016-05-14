@@ -28,6 +28,9 @@ std::vector<Point<T,N> > lecture(const char* file){
             }
             Point<T,N> p(v);
             p.id = id;
+            // Valeur du point
+            size_t pos2 = ligne.find(".");
+            p.value = std::stoi(ligne.substr(0, pos2));
             nuageDePoint.push_back(p);
             id++;
         }

@@ -157,6 +157,7 @@ void Simplexe<T,N>::drawSimplexe(Color c){
             line(tab[k].tab[0], tab[k].tab[1], tab[k+1].tab[0], tab[k+1].tab[1]);
         else
             line(tab[k].tab[0], tab[k].tab[1], tab[0].tab[0], tab[0].tab[1]);
+        print(tab[k].tab[0], tab[k].tab[1], tab[k].value);
     }
 }
 

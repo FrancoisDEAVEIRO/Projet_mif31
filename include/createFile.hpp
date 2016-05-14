@@ -10,7 +10,7 @@
 #include <time.h>
 #include "point.hpp"
 
-void CreateFilePointRandom(int N,int max, int nbPoints);
+void CreateFilePointRandom(int N, int max, int range, int nbPoints);
 
 
 #endif // CREATEFILE_HPP

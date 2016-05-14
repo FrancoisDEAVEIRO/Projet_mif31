@@ -15,11 +15,12 @@ std::istream & operator >> (std::istream & is, Point<T,dimension> &);
 template <typename T, int N> class Point{
 	public :
 	    int id;
+	    T value;
 		Point();
-		std::vector<T> tab;
+		std::vector<int> tab;
 		Point<T, N>(const int);
         Point<T, N>(const Point &);
-        Point<T, N>(const std::vector<T>);
+        Point<T, N>(const std::vector<int>);
         virtual ~Point();
         Point<T, N>& operator=(const Point &);
         bool operator==(const Point<T, N> &) const;
@@ -32,26 +33,30 @@ template <typename T, int N> class Point{
 };
 
 template<typename T, int N>
-Point<T,N>::Point(const std::vector<T> t){
+Point<T,N>::Point(const std::vector<int> t){
     tab = t;
     id = 0;
+    value = 0;
 }
 
 template<typename T, int N>
 Point<T,N>::Point(const Point & p){
     tab = p.tab;
     id = p.id;
+    value = p.value;
 }
 
 template<typename T, int N>
 Point<T,N>&Point<T,N>::operator=(const Point & p){
     tab = p.tab;
+    value = p.value;
     return *this;
 }
 
 template<typename T, int N>
 Point<T,N>::Point(){
     id = 0;
+    value = 0;
 }
 
 template<typename T, int N>
@@ -69,6 +74,7 @@ void Point<T,N>::affiche(){
     std::cout << id << " : ";
     for(typename std::vector<T>::iterator i = tab.begin(); i != tab.end();i++)
         std::cout << *i << " ";
+    std::cout << "valeur : " << value << ". ";
 }
 
 template<typename T, int N>

@@ -18,7 +18,7 @@ template <typename T, int N> class Menu{
         bool keyPressed;
         std::string info;
 
-        void checkKey(Pavage<T,N>&);
+        void checkKey(Pavage<T,N>&, int);
         bool isNumber(std::string);
         Menu();
 };
@@ -38,7 +38,7 @@ bool Menu<T,N>::isNumber(std::string s){
 }
 
 template<typename T, int N>
-void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
+void Menu<T,N>::checkKey(Pavage<T,N>& pavage, int DIMW){
     //backspace
     if(GetAsyncKeyState(VK_BACK) && !keyPressed ){
         keyPressed = true;
@@ -57,7 +57,7 @@ void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
         lastKeyPressed = VK_RETURN;
         if(info.size()>0){
             if(info == "help"){
-                info = "USAGE : addpoint n1 n2 n3 ... (précisez N paramètres en fonction de la dimension)";
+                info = "USAGE : addpoint n1 n2 n3 ... -v v1 (précisez N paramètres en fonction de la dimension et v1 la valeur de ce point)";
             }else if(info.substr(0,9)=="addpoint "){
                 // gestion des messages d'erreur avec info
                 Point<T,N> point;
@@ -69,9 +69,29 @@ void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
                 // On ajoute les coordonnées une par une
                 while ((pos = listeCoord.find(delimiter)) != std::string::npos) {
                     token = listeCoord.substr(0, pos);
+                    // On vérifie que chaque paramètre est un nombre
                     if(isNumber(token)){
-                        point.ajout(std::stoi(token));
+                        int coord = std::stoi(token);
+                        // On vérifie que ce nom est compris entre 0 et la taille de la fenetre
+                        if(coord>DIMW || coord < 0){
+                            info = "Veuillez entrer des points entre 0 et la taille de votre fenetre";
+                            return;
+                        }else{
+                            point.ajout(coord);
+                            listeCoord.erase(0, pos + delimiter.length());
+                        }
+                    // Option d'ajout de valeur
+                    }else if(token=="-v"){
                         listeCoord.erase(0, pos + delimiter.length());
+                        std::string value = listeCoord.substr(0, listeCoord.find(delimiter));
+                        if(isNumber(value)){
+                            int val = std::stoi(value);
+                            point.value = val;
+                            listeCoord = "";
+                            break;
+                        }
+                        info = value;
+                        return;
                     }else{
                         info = "Veuillez entrer des nombres";
                         return;
@@ -104,6 +124,16 @@ void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
     if(!GetAsyncKeyState(VK_RETURN) && lastKeyPressed == VK_RETURN){
         keyPressed = false;
         lastKeyPressed = 0;
+    }
+
+    // MINUS
+    if(GetAsyncKeyState(VK_SUBTRACT) && !keyPressed ){
+        keyPressed = true;
+        info+= "-";
+        lastKeyPressed = VK_SUBTRACT;
+    }
+    if(!GetAsyncKeyState(VK_SUBTRACT) && lastKeyPressed == VK_SUBTRACT){
+        keyPressed = false;
     }
 
     //SPACE

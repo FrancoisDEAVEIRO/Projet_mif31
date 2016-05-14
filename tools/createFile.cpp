@@ -1,19 +1,22 @@
 #include "../include/createFile.hpp"
 
 
-void CreateFilePointRandom(int N, int max, int nbPoints){
-    std::ofstream objetfichier;
+void CreateFilePointRandom(int N, int max, int range, int nbPoints){
+    std::ofstream fichier;
     srand(time(NULL));
-    objetfichier.open("data/pointRandom2D.txt", std::ios::out); //on ouvrre le fichier en ecriture
-    if (objetfichier.bad()) //permet de tester si le fichier s'est ouvert sans probleme
+    fichier.open("data/pointRandom2D.txt", std::ios::out); //on ouvrre le fichier en ecriture
+    if (fichier.bad()) //permet de tester si le fichier s'est ouvert sans probleme
         return;
 
     // Remplissage fichier
 	for(int i=0; i<nbPoints; i++){
         for(int j=0; j<N; j++){
-            objetfichier << rand()%max << ";" ;
+            //coordonnées
+            fichier << rand()%max << ";" ;
         }
-        objetfichier <<  std::endl;
+        // valeur associée au point
+        fichier << rand()%range << "." ;
+        fichier <<  std::endl;
 	}
-    objetfichier.close(); //on ferme le fichier pour liberer la mémoire
+    fichier.close(); //on ferme le fichier pour liberer la mémoire
 }
