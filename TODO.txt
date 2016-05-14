@@ -1,0 +1,4 @@
+Vérifier pour les ajouts : 
+	dimension : size point
+	caractère de type int
+	ajout des negatifs

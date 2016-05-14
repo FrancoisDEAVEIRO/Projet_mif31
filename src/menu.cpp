@@ -1,44 +1,14 @@
-#ifndef MENU_HPP
-#define MENU_HPP
-
-#include <iostream>
-#include <vector>
-#include <ctype.h>
-#include <windows.h>
-#include <Grapic.h>
-#include "pavage.hpp"
+#include "../include/menu.hpp"
 
 using namespace grapic;
 
-template <typename T, int N> class Menu;
-
-template <typename T, int N> class Menu{
-    public:
-        int lastKeyPressed;
-        bool keyPressed;
-        std::string info;
-
-        void checkKey(Pavage<T,N>&);
-        bool isNumber(std::string);
-        Menu();
-};
-
-template<typename T, int N>
-Menu<T,N>::Menu(){
+Menu::Menu(){
     lastKeyPressed = 0;
     keyPressed = false;
     info = "";
 }
 
-template<typename T, int N>
-bool Menu<T,N>::isNumber(std::string s){
-    std::string::const_iterator it = s.begin();
-    while (it != s.end() && std::isdigit(*it)) ++it;
-    return !s.empty() && it == s.end();
-}
-
-template<typename T, int N>
-void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
+void Menu::checkKey(){
     //backspace
     if(GetAsyncKeyState(VK_BACK) && !keyPressed ){
         keyPressed = true;
@@ -54,68 +24,17 @@ void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
     //ENTER
     if(GetAsyncKeyState(VK_RETURN) && !keyPressed ){
         keyPressed = true;
-        lastKeyPressed = VK_RETURN;
         if(info.size()>0){
-            if(info == "help"){
-                info = "USAGE : addpoint n1 n2 n3 ... (précisez N paramètres en fonction de la dimension)";
-            }else if(info.substr(0,9)=="addpoint "){
-                // gestion des messages d'erreur avec info
-                Point<T,N> point;
-                std::string listeCoord = info.substr(9,info.size());
-                info = listeCoord;
-                std::string delimiter = " ";
-                size_t pos = 0;
-                std::string token;
-                // On ajoute les coordonnées une par une
-                while ((pos = listeCoord.find(delimiter)) != std::string::npos) {
-                    token = listeCoord.substr(0, pos);
-                    if(isNumber(token)){
-                        point.ajout(std::stoi(token));
-                        listeCoord.erase(0, pos + delimiter.length());
-                    }else{
-                        info = "Veuillez entrer des nombres";
-                        return;
-                    }
-                }
-                // Cas du dernier élément qui n'a pas d'espace après lui
-                if(listeCoord.size()>0){
-                    if(isNumber(listeCoord)){
-                        point.ajout(std::stoi(listeCoord));
-                    }else{
-                        info = "Veuillez entrer des nombres";
-                        return;
-                    }
-                }
-                if(point.tab.size()==N){
-                    point.affiche();
-                    pavage.addPoint(point);
-                    info = "Point ajouté";
-                }else{
-                    info = "Nombre de paramètre incorrect pour le point";
-                }
-
-            }else{
-                info = "";
-            }
+            if(info.equal("help"));
+            info="";
         }
 
-
+        lastKeyPressed = VK_RETURN;
     }
     if(!GetAsyncKeyState(VK_RETURN) && lastKeyPressed == VK_RETURN){
         keyPressed = false;
         lastKeyPressed = 0;
     }
-
-    //SPACE
-    if(GetAsyncKeyState(VK_SPACE) && !keyPressed ){
-        keyPressed = true;
-        info+= " ";
-        lastKeyPressed = VK_SPACE;
-    }
-    if(!GetAsyncKeyState(VK_SPACE) && lastKeyPressed == VK_SPACE){
-        keyPressed = false;
-    }
-
 
     // ALPHABET A -> Z
     if(GetAsyncKeyState('A') && !keyPressed ){
@@ -480,6 +399,3 @@ void Menu<T,N>::checkKey(Pavage<T,N>& pavage){
     }
 }
 
-
-
-#endif //MENU_HPP

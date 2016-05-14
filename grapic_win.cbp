@@ -147,9 +147,7 @@
 		<Unit filename="include/createFile.hpp">
 			<Option target="myprog" />
 		</Unit>
-		<Unit filename="include/formule.hpp">
-			<Option target="myprog" />
-		</Unit>
+		<Unit filename="include/menu.hpp" />
 		<Unit filename="include/pavage.hpp">
 			<Option target="myprog" />
 		</Unit>
@@ -167,12 +165,6 @@
 		<Unit filename="src/Grapic_func.cpp" />
 		<Unit filename="src/Grapic_func.h" />
 		<Unit filename="tools/createFile.cpp">
-			<Option target="myprog" />
-		</Unit>
-		<Unit filename="tools/formule.cpp">
-			<Option target="myprog" />
-		</Unit>
-		<Unit filename="tools/reader.cpp">
 			<Option target="myprog" />
 		</Unit>
 		<Extensions>

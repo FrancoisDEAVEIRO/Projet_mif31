@@ -2,6 +2,7 @@
 #include "../../include/simplexe.hpp"
 #include "../../include/createFile.hpp"
 #include "../../include/reader.hpp"
+#include "../../include/menu.hpp"
 #include <Grapic.h>
 #include <string>
 
@@ -31,12 +32,14 @@ int main(int , char** )
 
 	Pavage<int,2> pavage(nuageDePoints,DIMW);
 	//pavage.affiche();
+	Menu<int,2> menu;
     pavage.displayInfo("info","info","info", DIMW, infoSize);
-
 	while( !stop ){
         backgroundColor( 100, 50, 200 );
         pavage.drawPavage(DIMW,infoSize);
         stop = winDisplay();
+        menu.checkKey(pavage);
+        pavage.displayInfo4(":>"+menu.info+"_", DIMW, infoSize);
     }
     //winQuit();
 	return 0;

@@ -806,11 +806,12 @@
 	<Grapic.h>
 	<cmath>
 
-1462546983 source:c:\users\abib\documents\mif31 - généricité\projet\sdl\apps\myprog\main_myprog.cpp
+1463161003 source:c:\users\abib\documents\mif31 - généricité\projet\sdl\apps\myprog\main_myprog.cpp
 	"../../include/pavage.hpp"
 	"../../include/simplexe.hpp"
 	"../../include/createFile.hpp"
 	"../../include/reader.hpp"
+	"../../include/menu.hpp"
 	<Grapic.h>
 	<string>
 
@@ -1224,7 +1225,7 @@
 
 1462322708 source:c:\users\abib\documents\mif31 - généricité\projet\sdl\tools\reader.cpp
 
-1462549205 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\pavage.hpp
+1463156482 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\pavage.hpp
 	<iostream>
 	<algorithm>
 	<vector>
@@ -1246,4 +1247,15 @@
 	<vector>
 	<sstream>
 	"point.hpp"
+
+1463157779 source:c:\users\abib\documents\mif31 - généricité\projet\sdl\src\menu.cpp
+	"../include/menu.hpp"
+
+1463229859 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\menu.hpp
+	<iostream>
+	<vector>
+	<ctype.h>
+	<windows.h>
+	<Grapic.h>
+	"pavage.hpp"
 
