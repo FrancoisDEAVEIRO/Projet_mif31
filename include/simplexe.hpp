@@ -40,13 +40,12 @@ template <typename T, int N> class Simplexe{
         Simplexe<T, N>& ajout(const Point<T,N>);
         Point<T, N>& operator[](int); //Acces en lecture
         const Point<T, N>& operator[](int) const; //Accès en écriture
-        Point<T,N> barycentre();
         void affiche();
         bool appartient(const Point<T,N>&);
-        int detPos(Simplexe &,const Point<T,N>&);
         std::string toString();
         void drawSimplexe(Color c);
         int determinant();
+        int determinant(Point<T,N> p0);
         T interpolation(Simplexe<T,N>& sm1, const Point<T,N>& p);
         double volume(Simplexe<T,N>& sm1, const Point<T,N>& p);
 };
@@ -110,22 +109,9 @@ std::ostream & operator<< (std::ostream & os, Simplexe<T,N> & s){
 }
 
 template<typename T, int N>
-Point<T,N> Simplexe<T,N>::barycentre(){
-    Point<T,N> result;
-    for(int i=0; i<N; i++){
-            T res=0;
-        for(unsigned int j=0; j<tab.size(); j++){
-            res += tab[j].tab[i];
-        }
-        result.ajout(res/(N+1));
-    }
-    return result;
-}
-
-template<typename T, int N>
 bool Simplexe<T,N>::appartient(const Point<T,N>& p){
     for(typename std::vector<Point<T,N> >::iterator i = tab.begin(); i != tab.end();i++){
-        // On teste si les N-1 Simplexe opposé au N-Simplexe sont du même côté que le N-Simplexe testé
+        // On teste si le N-1 Simplexe opposé au N-Simplexe est du même côté que le N-Simplexe testé
         if(!(p ==(*i))){
             // Simplexe de dimension N-1
             Simplexe<T,N> sm1;
@@ -135,23 +121,14 @@ bool Simplexe<T,N>::appartient(const Point<T,N>& p){
                 }
             }
             // Calcul du déterminant
-            int det1 = detPos(sm1,p);
-            int det2 = detPos(sm1,*i);
+            int det1 = sm1.determinant(p);
+            int det2 = sm1.determinant(*i);
+            std::cout << "simplexe : "<< sm1 << "det1 : " << det1 << " det2 : " << det2 << std::endl;
             if((det1 < 0 && det2 >= 0) || (det1 >= 0 && det2 < 0))
                 return false;
         }
     }
     return true;
-}
-
-
-template<typename T, int N>
-int Simplexe<T,N>::detPos(Simplexe<T,N>& sm1, const Point<T,N>& p){
-    int x1 = sm1[0].tab[0]-p[0];
-    int x2 = sm1[1].tab[0]-p[0];
-    int y1 = sm1[0].tab[1]-p[1];
-    int y2 = sm1[1].tab[1]-p[1];
-    return (x1*y2-y1*x2);
 }
 
 template<typename T, int N>
@@ -184,6 +161,20 @@ double abs(double nbr) {
 int factorial(int n){
     if(n!=1)
         return n*factorial(n-1);
+    return 1;
+}
+
+template<typename T, int N>
+int Simplexe<T,N>::determinant(Point<T,N> p0){
+    double *M=new double[N*N];
+    //remplissage de la matrice M
+    // Pour chaque autre points
+    for(unsigned int i=0; i<tab.size(); i++){
+        for(int j=0; j<N; j++){
+            M[i+j*N] = tab[i].tab[j] - p0.tab[j];
+        }
+    }
+    return det(M,N);
 }
 
 template<typename T, int N>
@@ -197,9 +188,6 @@ int Simplexe<T,N>::determinant(){
             M[i-1+j*N] = tab[i].tab[j] - p0.tab[j];
         }
     }
-    /*for(int i=0; i<N*N; i++)
-        std::cout<<" m[" << i << "] = " << M[i] << std::endl;
-    std::cout<<"det  "<< det(M,N) << std::endl;*/
     return det(M,N);
 }
 

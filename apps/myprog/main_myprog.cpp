@@ -2,7 +2,6 @@
 #include "../../include/simplexe.hpp"
 #include "../../include/createFile.hpp"
 #include "../../include/reader.hpp"
-#include "../../include/menu.hpp"
 #include <Grapic.h>
 #include <string>
 
@@ -26,22 +25,19 @@ int main(int , char** )
     bool stop=false;
 	winInit("MyProg", DIMW, DIMW+infoSize);
     setKeyRepeatMode(false);
-    CreateFilePointRandom(2, DIMW, 100, 10);
-    std::vector<Point<int,2> > nuageDePoints;
-    nuageDePoints = lecture<int,2>("data/pointRandom2D.txt");
+    CreateFilePointRandom(3, DIMW, 100, 10);
+    std::vector<Point<int,3> > nuageDePoints;
+    nuageDePoints = lecture<int,3>("data/pointRandom2D.txt");
 
-	Pavage<int,2> pavage(nuageDePoints,DIMW);
-	//pavage.affiche();
-	Menu<int,2> menu;
+	Pavage<int,3> pavage(nuageDePoints,DIMW);
     pavage.displayInfo("info","info","info", DIMW, infoSize);
+
 	while( !stop ){
         backgroundColor( 100, 50, 200 );
         pavage.drawPavage(DIMW,infoSize);
         stop = winDisplay();
-        menu.checkKey(pavage, DIMW);
-        pavage.displayInfo4(":>"+menu.info+"_", DIMW, infoSize);
     }
-    //winQuit();
+    winQuit();
 	return 0;
 }
 

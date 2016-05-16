@@ -219,7 +219,6 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
         Point<T,N> p({x,y});
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
-                Point<T,N> barycentre = (*i).barycentre();
                 Color c;
                 c.r = 0;
                 c.g = 255;
@@ -271,7 +270,7 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
             }
         }
 	}else{// MOUSE HOVER
-        int x, y;
+       /* int x, y;
 		mousePos(x, y);
         Point<T,N> p({x,y});
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
@@ -299,7 +298,7 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
                     (*i).hover = false;
                 }
             }
-        }
+        }*/
 	}
 }
 
