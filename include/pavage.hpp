@@ -144,8 +144,7 @@ Pavage<T, N>::Pavage(std::vector<Point<T,N> > nuageDePoints, int winSize){
     init(winSize);
     for(typename std::vector<Point<T,N> >::iterator i = nuageDePoints.begin(); i != nuageDePoints.end();i++){
         color(255, 255, 255);
-        point((*i)[0],(*i)[1]);
-        //print((*i)[0],(*i)[1],(*i).id);
+        point((*i)[0],(*i)[1]);;
         addPoint(*i);
     }
 }
@@ -251,7 +250,7 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 		int x, y;
 		mousePos(x, y);
 		Point<T,N> p({x,y});
-        /*Point<T,N> p;
+        /*Point<T,N> p(3);
         p[0] = x;
         p[1] = y;
         for(int i=2; i<N; i++)
@@ -282,12 +281,12 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 	}else{// MOUSE HOVER
         int x, y;
 		mousePos(x, y);
-		//Point<T,N> p({x,y});
-        Point<T,N> p(3);
+		Point<T,N> p({x,y});
+        /*Point<T,N> p(3);
         p[0] = x;
         p[1] = y;
         for(int i=2; i<N; i++)
-            p[i] = 0;
+            p[i] = 0;*/
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 if(!(*i).hover){
@@ -297,9 +296,10 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
                     c.b = 255;
                     (*i).drawSimplexe(c);
                     (*i).hover = true;
+                    T intValue = (*i).interpolation(*i,p);
                     std::string info1 = "Coordonnées : X = "+ std::to_string(x) + ", Y = " + std::to_string(y);
                     std::string info2 = "Simplexe : " + (*i).toString();
-                    std::string info3 = "Interpolation : " ;
+                    std::string info3 = "Interpolation : " + std::to_string(intValue);
                     displayInfo(info1, info2, info3, dimW, infoSize);
                 }
             }else{
