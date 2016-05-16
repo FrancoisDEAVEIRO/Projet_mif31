@@ -17,6 +17,11 @@ struct Color
 
 template <typename T, int N> class Simplexe;
 
+void lmatrice(double mat[],double lmat[], int n, int l);
+double det(double mat[], int n);
+int factorial(int n);
+double abs(double nbr);
+
 template <class T,int N>
 std::ostream & operator << (std::ostream & os, Simplexe<T,N>&);
 
@@ -41,6 +46,9 @@ template <typename T, int N> class Simplexe{
         int detPos(Simplexe &,const Point<T,N>&);
         std::string toString();
         void drawSimplexe(Color c);
+        int determinant();
+        T interpolation(Simplexe<T,N>& sm1, const Point<T,N>& p);
+        double volume(Simplexe<T,N>& sm1, const Point<T,N>& p);
 };
 
 /* Implémentation des fonctions */
@@ -138,13 +146,97 @@ bool Simplexe<T,N>::appartient(const Point<T,N>& p){
 
 
 template<typename T, int N>
-int Simplexe<T,N>::detPos( Simplexe<T,N>& sm1,const Point<T,N>& p){
+int Simplexe<T,N>::detPos(Simplexe<T,N>& sm1, const Point<T,N>& p){
     int x1 = sm1[0].tab[0]-p[0];
     int x2 = sm1[1].tab[0]-p[0];
     int y1 = sm1[0].tab[1]-p[1];
     int y2 = sm1[1].tab[1]-p[1];
     return (x1*y2-y1*x2);
 }
+
+template<typename T, int N>
+T Simplexe<T,N>::interpolation(Simplexe<T,N>& sm1, const Point<T,N>& p){
+    T intValue = 0;
+    int indice = 0;
+    for(typename std::vector<Point<T,N> >::iterator i = tab.begin(); i != tab.end();i++){
+        Simplexe<T,N> tmp = sm1;
+        tmp.tab.erase(tmp.tab.begin()+indice);
+        double volQ = volume(tmp, p);
+        double volS = tmp.volume(tmp, *i);
+        intValue += volQ/volS * (*i).value;
+        indice++;
+    }
+    return intValue;
+}
+
+template<typename T, int N>
+double Simplexe<T,N>::volume(Simplexe<T,N>& sm1, const Point<T,N>& p){
+    Simplexe<T,N> simplexe = sm1;
+    simplexe.ajout(p);
+    return abs((double)((double)1/factorial(N))*simplexe.determinant());
+}
+
+double abs(double nbr) {
+    if(nbr >= 0) return nbr;
+    else        return -nbr;
+}
+
+int factorial(int n){
+    if(n!=1)
+        return n*factorial(n-1);
+}
+
+template<typename T, int N>
+int Simplexe<T,N>::determinant(){
+    double *M=new double[N*N];
+    //remplissage de la matrice M
+    Point<T,N> p0 = tab[0];
+    // Pour chaque autre points
+    for(unsigned int i=1; i<tab.size(); i++){
+        for(int j=0; j<N; j++){
+            M[i-1+j*N] = tab[i].tab[j] - p0.tab[j];
+        }
+    }
+    /*for(int i=0; i<N*N; i++)
+        std::cout<<" m[" << i << "] = " << M[i] << std::endl;
+    std::cout<<"det  "<< det(M,N) << std::endl;*/
+    return det(M,N);
+}
+
+void lmatrice(double mat[],double lmat[], int n, int l){
+    int ld=0;
+    int k=n-1;
+    for(int i=0;i<n;i++){
+        if(i!=l){
+            for(int j=1;j<n;j++){
+                lmat[ld+(j-1)*k]=mat[i+j*n];
+            }
+            ld++;
+        }
+    }
+}
+
+double det(double mat[], int n){
+    double resultat;
+    resultat=0.;
+    int k=n-1;
+    double signe;
+    signe=1.;
+    double *lmat=new double[k*k];
+    if(n==1){
+        return mat[0];
+    }
+    for(int i=0;i<n;i++){
+        lmatrice(mat,lmat,n,i);
+        resultat=resultat+signe*mat[i]*det(lmat,k);
+        signe=-signe;
+    }
+    return resultat;
+    delete(lmat);
+}
+
+
+
 
 // AFFICHAGE
 template<typename T, int N>

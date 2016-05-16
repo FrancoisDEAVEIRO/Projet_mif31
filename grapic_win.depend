@@ -1225,16 +1225,17 @@
 
 1462322708 source:c:\users\abib\documents\mif31 - généricité\projet\sdl\tools\reader.cpp
 
-1463156482 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\pavage.hpp
+1463397120 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\pavage.hpp
 	<iostream>
 	<algorithm>
 	<vector>
 	<math.h>
+	<time.h>
 	"point.hpp"
 	"simplexe.hpp"
 	<Grapic.h>
 
-1463231925 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\simplexe.hpp
+1463396576 c:\users\abib\documents\mif31 - généricité\projet\sdl\include\simplexe.hpp
 	<iostream>
 	<vector>
 	"point.hpp"

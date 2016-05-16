@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include <math.h>
+#include <time.h>
 #include "point.hpp"
 #include "simplexe.hpp"
 #include <Grapic.h>
@@ -225,9 +226,10 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
                 c.b = 0;
                 (*i).drawSimplexe(c);
                 (*i).hover = true;
+                T intValue = (*i).interpolation(*i,p);
                 std::string info1 = "Coordonnées : X = "+ std::to_string(x) + ", Y = " + std::to_string(y);
                 std::string info2 = "Simplexe : " + (*i).toString();
-                std::string info3 = "Barycentre : " + barycentre.toString();
+                std::string info3 = "Interpolation : " + std::to_string(intValue);
                 displayInfo(info1, info2, info3, dimW,infoSize);
             }else{
                 if((*i).hover){
@@ -245,6 +247,7 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 		int x, y;
 		mousePos(x, y);
         Point<T,N> p({x,y});
+        p.value = rand()%100;
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 addPoint(p);
@@ -283,8 +286,8 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
                     (*i).hover = true;
                     std::string info1 = "Coordonnées : X = "+ std::to_string(x) + ", Y = " + std::to_string(y);
                     std::string info2 = "Simplexe : " + (*i).toString();
-                    std::string info3 = "Barycentre : " + barycentre.toString();
-                    displayInfo(info1, info2, info3, dimW,infoSize);
+                    std::string info3 = "Interpolation : " ;
+                    displayInfo(info1, info2, info3, dimW, infoSize);
                 }
             }else{
                 if((*i).hover){
