@@ -43,7 +43,7 @@ endif
 endif
 
 GRAPIC_OBJS = src/Grapic.cpp src/Grapic_func.cpp
-EXEC_RUN = bin/demo ; bin/myprog ; bin/particles ; bin/tetris ; bin/fluid ; bin/simpleDrawing ; bin/pacman
+EXEC_RUN = bin/myprog
 EXEC = $(EXEC_RUN:;=)
 
 bin: $(EXEC)
@@ -51,25 +51,8 @@ bin: $(EXEC)
 test: bin
 	$(EXEC_RUN)
 
-bin/demo: apps/demo/main_demo.cpp $(GRAPIC_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 bin/myprog: apps/myprog/main_myprog.cpp $(GRAPIC_OBJS) tools/createFile.cpp
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-bin/particles: apps/particles/main_particles.cpp $(GRAPIC_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-bin/tetris: apps/tetris/main_tetris.cpp $(GRAPIC_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-bin/fluid: apps/fluid/main_fluid.cpp $(GRAPIC_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-bin/simpleDrawing: apps/simpleDrawing/main_simpleDrawing.cpp $(GRAPIC_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-bin/pacman: apps/pacman/main_pacman.cpp $(GRAPIC_OBJS) apps/pacman/Jeu.cpp apps/pacman/Terrain.cpp apps/pacman/Pacman.cpp
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 bin/%: apps/%/main_%.cpp $(GRAPIC_OBJS)
