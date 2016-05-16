@@ -25,7 +25,7 @@ template <typename T, int N> class Point{
         Point<T, N>& operator=(const Point &);
         bool operator==(const Point<T, N> &) const;
         void ajout(const T &);
-        T & operator[](int); //Acces en lecture
+        int & operator[](int); //Acces en lecture
         const T & operator[](int) const; //Accès en écriture
         void affiche();
         std::string toString();
@@ -60,6 +60,13 @@ Point<T,N>::Point(){
 }
 
 template<typename T, int N>
+Point<T,N>::Point(const int i){
+    tab = std::vector<int>(i);
+    id = 0;
+    value = 0;
+}
+
+template<typename T, int N>
 void Point<T,N>:: ajout(const T & e){
     tab.push_back(e);
 }
@@ -72,7 +79,7 @@ Point<T, N>::~Point(){
 template<typename T, int N>
 void Point<T,N>::affiche(){
     std::cout << id << " : ";
-    for(typename std::vector<T>::iterator i = tab.begin(); i != tab.end();i++)
+    for(typename std::vector<int>::iterator i = tab.begin(); i != tab.end();i++)
         std::cout << *i << " ";
     std::cout << "valeur : " << value << ". ";
 }
@@ -80,7 +87,7 @@ void Point<T,N>::affiche(){
 template<typename T, int N>
 std::string Point<T,N>::toString(){
     std::string res = "";
-    for(typename std::vector<T>::iterator i = tab.begin(); i != tab.end();i++)
+    for(typename std::vector<int>::iterator i = tab.begin(); i != tab.end();i++)
         res+= std::to_string(*i) + " ";
     return res;
 }
@@ -88,13 +95,13 @@ std::string Point<T,N>::toString(){
 template <class T,int N>
 std::ostream  & operator<< (std::ostream & os, Point<T,N> & p){
     os << p.id << " : ";
-    for(typename std::vector<T>::iterator i = p.tab.begin(); i != p.tab.end();i++)
+    for(typename std::vector<int>::iterator i = p.tab.begin(); i != p.tab.end();i++)
         os << *i << " ";
     return os ;
 }
 
 template <class T,int N>
-T & Point<T,N>::operator[](int i){
+int & Point<T,N>::operator[](int i){
     return tab[i];
 }
 

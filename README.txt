@@ -1,4 +1,6 @@
-GrAPiC Graphics for Algo/Prog in C/C++ 
+DE AVEIRO		François		p1207332
+GIROUD			Victor			p1203716
+RAO FERNANDES 	William			p1106211
  
 COMPILATION
  WINDOWS

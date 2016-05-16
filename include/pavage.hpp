@@ -216,7 +216,12 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
     if (isMousePressed(SDL_BUTTON_LEFT)){
 		int x, y;
 		mousePos(x, y);
-        Point<T,N> p({x,y});
+		Point<T,N> p({x,y});
+        /*Point<T,N> p(3);
+        p[0] = x;
+        p[1] = y;
+        for(int i=2; i<N; i++)
+            p[i] = 0;*/
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 Color c;
@@ -245,7 +250,12 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 	}else if (isMousePressed(SDL_BUTTON_RIGHT)){
 		int x, y;
 		mousePos(x, y);
-        Point<T,N> p({x,y});
+		Point<T,N> p({x,y});
+        /*Point<T,N> p;
+        p[0] = x;
+        p[1] = y;
+        for(int i=2; i<N; i++)
+            p[i] = 0;*/
         p.value = rand()%100;
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
@@ -272,7 +282,12 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
 	}else{// MOUSE HOVER
         int x, y;
 		mousePos(x, y);
-        Point<T,N> p({x,y});
+		//Point<T,N> p({x,y});
+        Point<T,N> p(3);
+        p[0] = x;
+        p[1] = y;
+        for(int i=2; i<N; i++)
+            p[i] = 0;
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 if(!(*i).hover){

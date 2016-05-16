@@ -20,7 +20,7 @@ std::vector<Point<T,N> > lecture(const char* file){
         std::string token;
         int id = 0;
         while(getline(fichier, ligne)){ //Tant qu'on n'est pas à la fin, on lit
-            std::vector<T> v;
+            std::vector<int> v;
             while ((pos = ligne.find(delimiter)) != std::string::npos) {
                 token = ligne.substr(0, pos);
                 v.push_back(std::stoi(token));

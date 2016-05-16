@@ -123,8 +123,9 @@ bool Simplexe<T,N>::appartient(const Point<T,N>& p){
             // Calcul du déterminant
             int det1 = sm1.determinant(p);
             int det2 = sm1.determinant(*i);
-            if((det1 < 0 && det2 >= 0) || (det1 >= 0 && det2 < 0))
+            if((det1 < 0 && det2 >= 0) || (det1 >= 0 && det2 < 0)){
                 return false;
+            }
         }
     }
     return true;
@@ -168,11 +169,14 @@ int Simplexe<T,N>::determinant(Point<T,N> p0){
     double *M=new double[N*N];
     //remplissage de la matrice M
     // Pour chaque autre points
-    for(unsigned int i=0; i<tab.size(); i++){
-        for(int j=0; j<N; j++){
+    //std::cout<<"1"<<std::endl;
+    for(unsigned int i=0; i<N; i++){
+        for(unsigned int j=0; j<N; j++){
+            //std::cout<<"p = " << p0 <<std::endl;
             M[i+j*N] = tab[i].tab[j] - p0.tab[j];
         }
     }
+    //std::cout<<"2"<<std::endl;
     return det(M,N);
 }
 
@@ -236,7 +240,7 @@ void Simplexe<T,N>::drawSimplexe(Color c){
             line(tab[k].tab[0], tab[k].tab[1], tab[k+1].tab[0], tab[k+1].tab[1]);
         else
             line(tab[k].tab[0], tab[k].tab[1], tab[0].tab[0], tab[0].tab[1]);
-        print(tab[k].tab[0], tab[k].tab[1], tab[k].value);
+        print(tab[k].tab[0], tab[k].tab[1], (int)tab[k].value);
     }
 }
 
