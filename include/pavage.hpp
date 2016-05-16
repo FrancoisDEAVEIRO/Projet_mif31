@@ -121,7 +121,7 @@ void Pavage<T, N>::init(int winSize){
                 break;
             }
             j++;
-            // Si on est arrivé au dernier point, on revient au deuxieme
+            // Si on est arrivé au dernier point, on revient au troisième
             if(j==nuageDePoints.size())
                 j = 2;
         }
@@ -249,13 +249,13 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
         p.value = rand()%100;
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
-                addPoint(p);
                 Color c;
                 c.r = 0;
                 c.g = 0;
                 c.b = 0;
                 (*i).drawSimplexe(c);
                 (*i).hover = true;
+                addPoint(p);
                 //Pour éviter les erreur dues à la modification de tab
                 break;
             }else{
@@ -270,13 +270,12 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
             }
         }
 	}else{// MOUSE HOVER
-       /* int x, y;
+        int x, y;
 		mousePos(x, y);
         Point<T,N> p({x,y});
         for(typename std::vector<Simplexe<T,N> >::iterator i = tab.begin(); i != tab.end(); i++){
             if((*i).appartient(p)){
                 if(!(*i).hover){
-                    Point<T,N> barycentre = (*i).barycentre();
                     Color c;
                     c.r = 0;
                     c.g = 0;
@@ -298,7 +297,7 @@ void Pavage<T, N>::drawPavage(int dimW, int infoSize){
                     (*i).hover = false;
                 }
             }
-        }*/
+        }
 	}
 }
 

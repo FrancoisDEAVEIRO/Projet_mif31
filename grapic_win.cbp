@@ -147,7 +147,6 @@
 		<Unit filename="include/createFile.hpp">
 			<Option target="myprog" />
 		</Unit>
-		<Unit filename="include/menu.hpp" />
 		<Unit filename="include/pavage.hpp">
 			<Option target="myprog" />
 		</Unit>

@@ -25,11 +25,11 @@ int main(int , char** )
     bool stop=false;
 	winInit("MyProg", DIMW, DIMW+infoSize);
     setKeyRepeatMode(false);
-    CreateFilePointRandom(3, DIMW, 100, 10);
-    std::vector<Point<int,3> > nuageDePoints;
-    nuageDePoints = lecture<int,3>("data/pointRandom2D.txt");
+    CreateFilePointRandom(2, DIMW, 100, 0);
+    std::vector<Point<int,2> > nuageDePoints;
+    nuageDePoints = lecture<int,2>("data/pointRandom2D.txt");
 
-	Pavage<int,3> pavage(nuageDePoints,DIMW);
+	Pavage<int,2> pavage(nuageDePoints,DIMW);
     pavage.displayInfo("info","info","info", DIMW, infoSize);
 
 	while( !stop ){

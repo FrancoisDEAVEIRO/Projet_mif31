@@ -123,7 +123,6 @@ bool Simplexe<T,N>::appartient(const Point<T,N>& p){
             // Calcul du déterminant
             int det1 = sm1.determinant(p);
             int det2 = sm1.determinant(*i);
-            std::cout << "simplexe : "<< sm1 << "det1 : " << det1 << " det2 : " << det2 << std::endl;
             if((det1 < 0 && det2 >= 0) || (det1 >= 0 && det2 < 0))
                 return false;
         }
