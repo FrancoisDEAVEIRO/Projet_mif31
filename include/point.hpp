@@ -1,8 +1,15 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
+/*!
+ * \file point.hpp
+ * \brief Contient la classe Point
+ * \author De Aveiro, Giroud, Rao Fernandes
+ */
+
 #include <iostream>
 #include <vector>
+
 
 template <typename T, int N> class Point;
 
@@ -12,6 +19,10 @@ std::ostream & operator << (std::ostream & os, Point<T,dimension> &);
 template <typename T,int dimension>
 std::istream & operator >> (std::istream & is, Point<T,dimension> &);
 
+/*! 
+ * \class Point
+ * \brief Classe contenant les attributs et méthode nécessaire à la gestion des points
+ */
 template <typename T, int N> class Point{
 	public :
 	    int id;
@@ -32,6 +43,11 @@ template <typename T, int N> class Point{
 
 };
 
+/*! 
+ * \fn Point
+ * \brief Constructeur par valeur
+ * \param t vecteur de int
+ */
 template<typename T, int N>
 Point<T,N>::Point(const std::vector<int> t){
     tab = t;
@@ -39,6 +55,11 @@ Point<T,N>::Point(const std::vector<int> t){
     value = 0;
 }
 
+/*! 
+ * \fn Point
+ * \brief Constructeur par copie
+ * \param p Point
+ */
 template<typename T, int N>
 Point<T,N>::Point(const Point & p){
     tab = p.tab;
@@ -46,6 +67,11 @@ Point<T,N>::Point(const Point & p){
     value = p.value;
 }
 
+/*! 
+ * \fn operator=
+ * \brief Surcharge de l'opérateur "="
+ * \param p Point
+ */
 template<typename T, int N>
 Point<T,N>&Point<T,N>::operator=(const Point & p){
     tab = p.tab;
@@ -53,6 +79,10 @@ Point<T,N>&Point<T,N>::operator=(const Point & p){
     return *this;
 }
 
+/*! 
+ * \fn Point
+ * \brief Constructeur par défaut
+ */
 template<typename T, int N>
 Point<T,N>::Point(){
     id = 0;
@@ -71,11 +101,19 @@ void Point<T,N>:: ajout(const T & e){
     tab.push_back(e);
 }
 
+/*! 
+ * \fn ~Point
+ * \brief Destructeur
+ */
 template<typename T, int N>
 Point<T, N>::~Point(){
     //destructeur
 }
 
+/*! 
+ * \fn affichage
+ * \brief Affiche les valeurs d'un point
+ */
 template<typename T, int N>
 void Point<T,N>::affiche(){
     std::cout << id << " : ";
@@ -84,6 +122,10 @@ void Point<T,N>::affiche(){
     std::cout << "valeur : " << value << ". ";
 }
 
+/*! 
+ * \fn toString
+ * \brief Convertie les valeurs d'un point en String
+ */
 template<typename T, int N>
 std::string Point<T,N>::toString(){
     std::string res = "";
@@ -92,6 +134,12 @@ std::string Point<T,N>::toString(){
     return res;
 }
 
+/*! 
+ * \fn operator<<
+ * \brief Surchage de l'opérateur "<<"
+ * \param os Sortie
+ * \param p Point
+ */
 template <class T,int N>
 std::ostream  & operator<< (std::ostream & os, Point<T,N> & p){
     os << p.id << " : ";
@@ -100,16 +148,31 @@ std::ostream  & operator<< (std::ostream & os, Point<T,N> & p){
     return os ;
 }
 
+/*! 
+ * \fn operator[]
+ * \brief Surchage de l'opérateur "[]" pour l'écriture
+ * \param i int
+ */
 template <class T,int N>
 int & Point<T,N>::operator[](int i){
     return tab[i];
 }
 
+/*! 
+ * \fn const operator[]
+ * \brief Surchage de l'opérateur "[]" pour la lecture
+ * \param i int
+ */
 template <class T,int N>
 const T & Point<T,N>::operator[](int i) const{
     return tab[i];
 }
 
+/*! 
+ * \fn operator==
+ * \brief Surchage de l'opérateur "=="
+ * \param p Point
+ */
 template <class T,int N>
 bool Point<T,N>::operator==(const Point<T, N> & p) const{
     for(unsigned int i=0; i<p.tab.size(); i++){

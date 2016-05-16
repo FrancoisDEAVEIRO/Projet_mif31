@@ -1,6 +1,12 @@
 #ifndef READER_HPP
 #define READER_HPP
 
+/*!
+ * \file reader.hpp
+ * \brief Contient la lecture de fichiers
+ * \author De Aveiro, Giroud, Rao Fernandes
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,6 +14,12 @@
 #include <sstream>
 #include "point.hpp"
 
+
+/*! 
+ * \fn lecture
+ * \brief Fonction de lecture de fichiers
+ * \param file Nom du fichier
+ */
 template <typename T, int N>
 std::vector<Point<T,N> > lecture(const char* file){
     std::ifstream fichier(file);
